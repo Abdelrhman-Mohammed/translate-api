@@ -9,12 +9,16 @@ app.use(express.urlencoded());
 app.use(express.json());
 app.use(cors());
 
+app.get("/", (req, res) => {
+  res.status(200).json({ message: "Server is running" });
+});
+
 app.post("/translate", (req, res) => {
   if (req.body.text) {
     translate(req.body.text, { to: "ar", autoCorrect: 1 }).then((result) => {
       console.log({ original: req.body.text, translated: result.text });
 
-      res.json({ text: result.text });
+      res.status(200).json({ text: result.text });
     });
   }
 });
